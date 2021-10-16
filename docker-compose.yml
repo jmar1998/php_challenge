@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+    php:
+        build: .
+        container_name: 'php-challenge-src'
+        restart: on-failure
+        stdin_open: true
+        volumes:
+          - ./:/project
+    mysql:
+        image: mysql
+        container_name: 'php-challenge-mysql'
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+            MYSQL_DATABASE: php-challenge
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+        ports:
+            - "3306:3306"
+        volumes:
+          - ./database-init.sql:/project/database-init.sql
+    phpmyadmin:
+      image: phpmyadmin
+      restart: always
+      ports:
+        - 8080:80
+      environment:
+        PMA_HOST: mysql
