@@ -5,8 +5,6 @@ services:
         container_name: 'php-challenge-src'
         restart: on-failure
         stdin_open: true
-        volumes:
-          - ./:/project
     mysql:
         image: mysql
         container_name: 'php-challenge-mysql'
